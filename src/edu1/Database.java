@@ -1,5 +1,8 @@
 package edu1;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+
 public class Database implements Connectable {
     private boolean isConnectionOpen;
 
@@ -9,6 +12,7 @@ public class Database implements Connectable {
             throw new Exception("Connection is already open...");
         }
         this.isConnectionOpen = true;
+        System.out.println("Connection open!");
     }
 
     @Override
@@ -17,6 +21,7 @@ public class Database implements Connectable {
             throw new Exception("Connection is already close...");
         }
         this.isConnectionOpen = false;
+        System.out.println("Connection close!");
     }
 
     @Override
@@ -25,13 +30,19 @@ public class Database implements Connectable {
     }
 
     @Override
-    public Dictionary getByIndex(int index) throws Exception {
+    public Dictionary getByIndex(String index) throws Exception {
         if (!this.isConnectionOpen) {
             throw new Exception("Connection is closed...");
         }
-        isExist(index);
+        int intIndex = tryInt(index);
+        isExist(intIndex);
         Dictionary[] dictionaries = JsonSerializer.getRecords();
-        return dictionaries[index];
+        return dictionaries[intIndex];
+    }
+
+    public static int tryInt(String birth) throws ParseException {
+        NumberFormat nf = NumberFormat.getIntegerInstance();
+        return nf.parse(birth).intValue();
     }
 
     private void isExist(int index) throws Exception {
@@ -68,12 +79,26 @@ public class Database implements Connectable {
                 return dic;
             }
         }
-        return dictionary;
+        throw new Exception("There is no object with such key: " + key);
     }
 
     @Override
-    public Dictionary[] getSomeRecords(int... params) {
-        return new Dictionary[0];
+    public Dictionary[] getSomeRecords(int startIndex, int endIndex) throws Exception {
+        if (!this.isConnectionOpen) {
+            throw new Exception("Connection is closed...");
+        }
+        Dictionary[] dictionaries = JsonSerializer.getRecords();
+        for (int i = startIndex; i <= endIndex; i++) {
+            isExist(i);
+        }
+        Dictionary[] newDic = new Dictionary[endIndex - startIndex];
+        System.out.println("len---: " + newDic.length);
+        int z=0;
+        for (int j = startIndex; j < endIndex; j++) {
+            newDic[z] = dictionaries[j];
+            z++;
+        }
+        return newDic;
     }
 
     @Override
@@ -89,7 +114,13 @@ public class Database implements Connectable {
         if (!this.isConnectionOpen) {
             throw new Exception("Connection is closed...");
         }
-        JsonSerializer.addRecordToDb(dictionary);
+        Dictionary[] dictionaries = JsonSerializer.getRecords();
+        Dictionary[] newDictionaries = new Dictionary[dictionaries.length + 1];
+        for (int i = 0; i < dictionaries.length; i++) {
+            newDictionaries[i] = dictionaries[i];
+        }
+        newDictionaries[dictionaries.length] = dictionary;
+        JsonSerializer.writeRecords(newDictionaries);
     }
 
     @Override

@@ -5,7 +5,7 @@
   },
   {
     "key": "jam",
-    "value": "It is gone and gone and gone..."
+    "value": "newValue"
   },
   {
     "key": "abc",
@@ -16,7 +16,23 @@
     "value": "101: ABC for toddlers"
   },
   {
-    "key": "over900",
+    "key": "2",
     "value": "Way over 9000!"
+  },
+  {
+    "key": "3",
+    "value": "new value after update"
+  },
+  {
+    "key": "4",
+    "value": "new value after update"
+  },
+  {
+    "key": "5",
+    "value": "new value after update"
+  },
+  {
+    "key": "6",
+    "value": "new value after update"
   }
 ]

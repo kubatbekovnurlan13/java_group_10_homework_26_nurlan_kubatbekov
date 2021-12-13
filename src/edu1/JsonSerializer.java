@@ -14,14 +14,14 @@ public class JsonSerializer {
         }
     }
 
-    public static void addRecordToDb(Dictionary dictionary) throws IOException {
-        Gson gson = new Gson();
-        Writer writer = new FileWriter("Dictionary.json");
-        try (writer) {
-            String json = gson.toJson(dictionary);
-            writer.append(json);
-        }
-    }
+//                    public static void addRecordToDb(Dictionary dictionary) throws IOException {
+//                        Gson gson = new Gson();
+//                        Writer writer = new FileWriter("Dictionary.json");
+//                        try (writer) {
+//                            String json = gson.toJson(dictionary);
+//                            writer.append(json);
+//                        }
+//                    }
 
     public static Dictionary[] getRecords() throws IOException {
         Gson gson = new Gson();

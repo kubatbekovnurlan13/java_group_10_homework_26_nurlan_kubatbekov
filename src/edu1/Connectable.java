@@ -7,13 +7,13 @@ public interface Connectable {
 
     boolean checkConnection();
 
-    Dictionary getByIndex(int index) throws Exception;
+    Dictionary getByIndex(String index) throws Exception;
 
     boolean checkByKey(String key) throws Exception;
 
     Dictionary getByKey(String key) throws Exception;
 
-    Dictionary[] getSomeRecords(int... params);
+    Dictionary[] getSomeRecords(int startIndex, int endIndex) throws Exception;
 
     int getLenOfRecords() throws Exception;
 
