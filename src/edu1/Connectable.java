@@ -1,26 +1,25 @@
-
 package edu1;
 
 public interface Connectable {
-    void openConnection();
+    void openConnection() throws Exception;
 
-    void closeConnection();
+    void closeConnection() throws Exception;
 
-    void checkConnection();
+    boolean checkConnection();
 
-    String readByIndex(int index);
+    Dictionary getByIndex(int index) throws Exception;
 
-    boolean checkByKey(String key);
+    boolean checkByKey(String key) throws Exception;
 
-    Dictionary readByKey(String key);
+    Dictionary getByKey(String key) throws Exception;
 
-    Dictionary[] readSomeRecords(int... params);
+    Dictionary[] getSomeRecords(int... params);
 
-    int getLenOfRecords();
+    int getLenOfRecords() throws Exception;
 
-    void addRecordToDb(Dictionary dictionary);
+    void addRecordToDb(Dictionary dictionary) throws Exception;
 
-    void updateValueByIndex(int index);
+    void updateValueByIndex(int index, String newValue) throws Exception;
 
-    void updateValueByKey(String key);
+    void updateValueByKey(String key, String newValue) throws Exception;
 }
